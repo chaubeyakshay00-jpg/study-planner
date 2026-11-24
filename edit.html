@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Study Task</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Edit Study Task</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+
+        <label for="name">Student Name:</label>
+        <input type="text"
+               id="name"
+               name="name"
+               value="{{ task['name'] }}"
+               maxlength="80"
+               required>
+
+        <br><br>
+
+        <label for="subject">Subject:</label>
+        <input type="text"
+               id="subject"
+               name="subject"
+               value="{{ task['subject'] }}"
+               maxlength="120"
+               required>
+
+        <br><br>
+
+        <label for="hours">Study Hours:</label>
+        <input type="number"
+               id="hours"
+               name="hours"
+               min="1"
+               max="24"
+               value="{{ task['hours'] }}"
+               required>
+
+        <br><br>
+
+        <label for="date">Study Date:</label>
+        <input type="date"
+               id="date"
+               name="date"
+               value="{{ task['date'] }}"
+               required>
+
+        <br><br>
+
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority" required>
+            <option value="Low"
+                {% if task['priority'] == 'Low' %}selected{% endif %}>
+                Low
+            </option>
+
+            <option value="Medium"
+                {% if task['priority'] == 'Medium' %}selected{% endif %}>
+                Medium
+            </option>
+
+            <option value="High"
+                {% if task['priority'] == 'High' %}selected{% endif %}>
+                High
+            </option>
+        </select>
+
+        <br><br>
+
+        <button type="submit">Save Changes</button>
+
+        <a href="{{ url_for('home') }}">Cancel</a>
+
+    </form>
+</div>
+
+</body>
+</html>
